@@ -8,7 +8,7 @@ FlipFlop SDK
 
 ## 사용방법
 
-##### AndroidManifest.xml에 아래의 내용을 추가하여 권한이 허용되도록 한다.
+1. AndroidManifest.xml에 아래의 내용을 추가하여 권한이 허용되도록 한다.
 
 ```
 <uses-permission android:name="android.permission.INTERNET"/>
@@ -19,7 +19,7 @@ FlipFlop SDK
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 ```
 
-##### Amazon 관련 서비스가 동작할 수 있도록 아래의 내용을 AndroidManifest.xml에 추가한다.
+2. Amazon 관련 서비스가 동작할 수 있도록 아래의 내용을 AndroidManifest.xml에 추가한다.
 
 ```
 <service
@@ -27,7 +27,7 @@ FlipFlop SDK
     android:enabled="true"/>
 ```
 
-##### SDK 초기화
+3. SDK 초기화
 
  - 웹에서 회원가입 후 생성된 client id와 client secret을 사용하여 SDK 초기화를 한다.
  - Application instance의 onCreate()에서 호출하는 것을 추천한다.
@@ -36,7 +36,7 @@ FlipFlop SDK
 FlipFlop.initialize(clientId, clientSecret)
 ```
 
-##### 사용자 인증
+4. 사용자 인증
 
  - FlipFlop SDK를 사용하려면 위의 초기화 후 사용자 정보를 SDK에 넣어서 인증을 해주어야 한다.
  - 여기서 얻은 FlipFlop instance를 사용해서 SDK가 제공하는 기능을 사용하게 된다.
