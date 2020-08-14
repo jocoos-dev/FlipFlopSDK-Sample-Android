@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">FlipFlopSDK-Android</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="live">LIVE</string>
+    <string name="login">Login</string>
+    <string name="start_broadcasting">Start</string>
+    <string name="stop_broadcasting">Stop</string>
+    <string name="retry">Reconnect</string>
+    <string name="streaming_not_finished">Your previous broadcast still sends packets due to slow internet speed</string>
+    <string name="oopps_shouldnt_happen">Oopps this shouldn\'t be happened. Please let the library developer this status</string>
+
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+</resources>

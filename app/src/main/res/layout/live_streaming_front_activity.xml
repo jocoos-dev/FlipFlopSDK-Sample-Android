@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/title_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="8dp"
+        android:text="Title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <EditText
+        android:id="@+id/editTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_desc"/>
+
+    <TextView
+        android:id="@+id/content_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:text="Content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTitle"/>
+
+    <EditText
+        android:id="@+id/editContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/content_title"/>
+
+    <TextView
+        android:id="@+id/goods_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:text="Select goods"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editContent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/goodsList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/goods_title" />
+
+    <Button
+        android:id="@+id/next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@color/colorPrimary"
+        android:text="Next"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/editContent"
+        app:layout_constraintTop_toBottomOf="@+id/goodsList"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

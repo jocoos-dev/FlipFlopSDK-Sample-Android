@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.jocoos.flipflop.view.FFView
+        android:id="@+id/liveView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/transparent_cover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#77000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/round_white50_4"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/startStreaming"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/startStreaming"/>
+
+    <TextView
+        android:id="@+id/retry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/round_white50_16"
+        android:paddingStart="8dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="4dp"
+        android:text="@string/retry"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textTitle"/>
+
+    <TextView
+        android:id="@+id/startStreaming"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/round_primary"
+        android:padding="8dp"
+        android:text="@string/start_broadcasting"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/chatLayout"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginBottom="48dp"
+        android:layout_marginEnd="56dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:context=".live.StreamerActivity">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chatMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="8dp"
+            android:fadingEdgeLength="12dp"
+            android:requiresFadingEdge="vertical"/>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/textViewer"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/round_white20"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/imageToggle"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/textViewerCount"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:drawableStart="@drawable/ic_viewer_white"
+            android:drawablePadding="4dp"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.2"
+            android:text="0"
+            android:textColor="@color/white80"
+            android:textSize="14sp" />
+
+    </FrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/goodsList"
+        android:layout_width="56dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:clipToPadding="false"
+        app:layout_constraintBottom_toTopOf="@id/imageToggle"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageToggle"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/btn_square_ic"
+        android:contentDescription="more"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

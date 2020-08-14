@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical">
+
+    <com.jocoos.flipflop.view.FFView
+        android:id="@+id/playerPreview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/profileImage"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="profile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/profileImage"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/textOwner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/profileImage"
+        app:layout_constraintTop_toBottomOf="@+id/textTitle"/>
+
+    <FrameLayout
+        android:id="@+id/textViewer"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_margin="8dp"
+        android:background="@drawable/round_white20"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textViewerCount"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:drawableStart="@drawable/ic_viewer_white"
+            android:drawablePadding="4dp"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.2"
+            android:text="0"
+            android:textColor="@color/white80"
+            android:textSize="14sp" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/finish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/round_white50_16"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:text="Finished"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <FrameLayout
+        android:id="@+id/chatLayout"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="68dp"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/editLayout"
+        app:layout_goneMarginBottom="64dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chatMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:fadingEdgeLength="12dp"
+            android:requiresFadingEdge="vertical" />
+
+    </FrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/goodsList"
+        android:layout_width="56dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:clipToPadding="false"
+        app:layout_constraintBottom_toTopOf="@+id/editLayout"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/editLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_8"
+        android:background="@drawable/plain_edit_message"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/space_16"
+            android:layout_marginLeft="@dimen/space_16"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="Input message"
+            android:imeOptions="flagNoExtractUi"
+            android:inputType="none"
+            android:maxLength="50"
+            android:maxLines="4"
+            android:padding="@dimen/space_16"
+            android:textColor="@color/black"
+            android:textColorHint="@color/light_gray"
+            android:textCursorDrawable="@null"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/sendButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/space_16"
+            android:layout_marginRight="@dimen/space_16"
+            android:contentDescription="Send"
+            android:enabled="false"
+            android:padding="@dimen/space_16"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_send_gray"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.jocoos.flipflop.sample" >
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <application
+        android:name=".FlipFlopSampleApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/logo"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning">
+
+        <activity
+            android:name=".AVPlayerActivity"
+            android:label="@string/login"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
+            android:name=".FrontActivity"
+            android:label="@string/login"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
+            android:name=".LaunchActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".live.LiveStreamingActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity
+            android:name=".live.LiveStreamingFrontActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity
+            android:name=".live.LiveWatchingActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/login"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
+            android:name=".main.MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity
+            android:name=".vod.PlayerActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <service
+            android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
+            android:enabled="true"/>
+
+    </application>
+
+</manifest>
