@@ -70,14 +70,20 @@ class LiveStreamingActivity : AppCompatActivity(), FFStreamerListener {
         textTitle.text = title
 
         // get instance for live streaming
-        streamer = FlipFlopSampleApp.flipFlopInstance?.createStreamer(lifecycle)?.apply {
+        streamer = FlipFlopSampleApp.flipFlopInstance?.createStreamer()?.apply {
             listener = this@LiveStreamingActivity
             prepare(this@LiveStreamingActivity, liveView, StreamerConfig())
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        streamer?.stop()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
+        streamer?.reset()
 
         adapter?.unregisterAdapterDataObserver(adapterDataObserver)
         chatMessage.adapter = null

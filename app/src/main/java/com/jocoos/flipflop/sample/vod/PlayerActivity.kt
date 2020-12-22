@@ -19,6 +19,7 @@ import com.jocoos.flipflop.sample.main.GoodsImageListAdapter
 import com.jocoos.flipflop.sample.main.GoodsShape
 import com.jocoos.flipflop.sample.main.GoodsSize
 import com.jocoos.flipflop.sample.main.MainFragment.Companion.KEY_GOODS_INFO
+import com.jocoos.flipflop.sample.util.FFPlayerLifecycleWrapper
 import com.jocoos.flipflop.sample.util.getDimensionSize
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
@@ -45,6 +46,7 @@ class PlayerActivity : AppCompatActivity(), FFPlayerListener {
     private val goodsImageListAdapter = GoodsImageListAdapter(GoodsShape.CIRCLE, GoodsSize.SMALL)
 
     private var player: FFPlayer? = null
+    private var playerLifecycleWrapper: FFPlayerLifecycleWrapper? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +62,7 @@ class PlayerActivity : AppCompatActivity(), FFPlayerListener {
 
     override fun onDestroy() {
         super.onDestroy()
+        playerLifecycleWrapper = null
         adapter?.unregisterAdapterDataObserver(adapterDataObserver)
         chatMessage.adapter = null
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -99,7 +102,7 @@ class PlayerActivity : AppCompatActivity(), FFPlayerListener {
     }
 
     private fun initPlayer(video: Video) {
-        when (val result = FlipFlopSampleApp.flipFlopInstance?.createPlayer(this, video, lifecycle)) {
+        when (val result = FlipFlopSampleApp.flipFlopInstance?.createPlayer(this, video)) {
             is FFResult.Success -> {
                 player = result.value.apply {
                     listener = this@PlayerActivity
@@ -111,6 +114,10 @@ class PlayerActivity : AppCompatActivity(), FFPlayerListener {
                 finish()
                 return
             }
+        }
+
+        player?.let {
+            playerLifecycleWrapper = FFPlayerLifecycleWrapper(lifecycle, it)
         }
     }
 
