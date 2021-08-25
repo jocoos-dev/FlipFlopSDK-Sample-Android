@@ -129,7 +129,7 @@ class LiveWatchingActivity : AppCompatActivity(), FFPlayerListener {
                 FlipFlopSampleApp.userManager.user.userId,
                 FlipFlopSampleApp.userManager.user.username,
                 FlipFlopSampleApp.userManager.user.profileUrl,
-                message, "", "", null, Date()
+                message, "", "", null, null, Date()
             )
             player?.sendMessage(item)
             editText.setText("")

@@ -15,7 +15,7 @@ buildscript {
     ext.buildConfig.version['name'] = "${buildConfig.version.major}.${buildConfig.version.minor}.${buildConfig.version.patch}"
     ext.buildConfig.version['code'] = buildConfig.version.major * 10000 + buildConfig.version.minor * 100 + buildConfig.version.patch
 
-    ext.kotlin_version = '1.3.72'
+    ext.kotlin_version = '1.5.0'
 
     repositories {
         google()

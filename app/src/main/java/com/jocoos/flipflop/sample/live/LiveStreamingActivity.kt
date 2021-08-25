@@ -17,7 +17,11 @@ import com.jocoos.flipflop.sample.main.GoodsImageListAdapter
 import com.jocoos.flipflop.sample.main.GoodsShape
 import com.jocoos.flipflop.sample.main.GoodsSize
 import com.jocoos.flipflop.sample.main.MainFragment.Companion.KEY_GOODS_INFO
+import com.jocoos.flipflop.sample.util.MainCoroutineScope
 import kotlinx.android.synthetic.main.live_streaming_activity.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 /**
  * start live streaming
@@ -25,6 +29,7 @@ import kotlinx.android.synthetic.main.live_streaming_activity.*
 class LiveStreamingActivity : AppCompatActivity(), FFStreamerListener {
     private var streamer: FFStreamer? = null
     private var isStarted = false
+    private val scope: CoroutineScope = MainCoroutineScope(Job())
 
     private var title: String = ""
     private var content: String = ""
@@ -70,7 +75,7 @@ class LiveStreamingActivity : AppCompatActivity(), FFStreamerListener {
         textTitle.text = title
 
         // get instance for live streaming
-        streamer = FlipFlopSampleApp.flipFlopInstance?.createStreamer()?.apply {
+        streamer = FlipFlopSampleApp.flipFlopInstance?.createHQStreamer()?.apply {
             listener = this@LiveStreamingActivity
             prepare(this@LiveStreamingActivity, liveView, StreamerConfig())
         }
@@ -112,8 +117,19 @@ class LiveStreamingActivity : AppCompatActivity(), FFStreamerListener {
             streamer?.stop()
         }
 
-        isStarted = false
-        finish()
+        scope.launch {
+            streamer?.getVideoKey()?.let { videoKey ->
+                when (val result = FlipFlopSampleApp.flipFlopInstance?.stopVideo(videoKey)) {
+                    is FFResult.Success -> {
+                        isStarted = false
+                        finish()
+                    }
+                    is FFResult.Failure -> {
+                        Snackbar.make(chatLayout, "failed to stop streaming", Snackbar.LENGTH_LONG).show()
+                    }
+                }
+            }
+        }
     }
 
     private val adapterDataObserver = object : RecyclerView.AdapterDataObserver() {
@@ -155,21 +171,14 @@ class LiveStreamingActivity : AppCompatActivity(), FFStreamerListener {
 
     override fun onError(error: FlipFlopException) {
         when (error.code) {
-            FFErrorCode.ERROR_LIVE_USER_EXCEED -> {
+            FFErrorCode.ERROR_LIVE_CONNECT -> {
                 Toast.makeText(this@LiveStreamingActivity,
-                    "라이브 제한에 걸려서 라이브를 진행할 수 없습니다. 관리자에게 문의 바랍니다: ${error.message}",
-                    Toast.LENGTH_LONG).show()
-            }
-            FFErrorCode.ERROR_CHAT_DISCONNECT -> {
-                // chatting error
-                retry.isVisible = true
-                Toast.makeText(this@LiveStreamingActivity,
-                    "채팅이 끊겼습니다. 다시 시도해 보세요: ${error.message}",
+                    "라이브 연결이 끊어졌습니다.",
                     Toast.LENGTH_LONG).show()
             }
             FFErrorCode.ERROR_CHAT_CONNECT -> {
                 Toast.makeText(this@LiveStreamingActivity,
-                    "채팅이 연결되지 않았습니다.나중에 다시 시도해 보세요: ${error.message}",
+                    "채팅이 연결되지 않았습니다.",
                     Toast.LENGTH_LONG).show()
             }
             else -> {
@@ -178,8 +187,5 @@ class LiveStreamingActivity : AppCompatActivity(), FFStreamerListener {
                     Toast.LENGTH_LONG).show()
             }
         }
-
-        Snackbar.make(chatLayout, "${error.code} - ${error.message}", Snackbar.LENGTH_LONG)
-            .show()
     }
 }
