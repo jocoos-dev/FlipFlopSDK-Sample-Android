@@ -75,9 +75,9 @@ class LiveStreamingActivity : AppCompatActivity(), FFStreamerListener {
         textTitle.text = title
 
         // get instance for live streaming
-        streamer = FlipFlopSampleApp.flipFlopInstance?.createHQStreamer()?.apply {
+        streamer = FlipFlopSampleApp.flipFlopInstance?.getStreamer()?.apply {
             listener = this@LiveStreamingActivity
-            prepare(this@LiveStreamingActivity, liveView, StreamerConfig())
+            prepare(this@LiveStreamingActivity, liveView, FFStreamerConfig())
         }
     }
 
@@ -162,11 +162,10 @@ class LiveStreamingActivity : AppCompatActivity(), FFStreamerListener {
 
     override fun onChatMessageReceived(item: FFMessage) {
         adapter?.addItem(item)
-    }
-
-    override fun onChatStatReceived(stat: FFStat) {
-        val participantCountExceptMyself = stat.participantCount - 1
-        textViewerCount.text = participantCountExceptMyself.toString()
+        if (item.messageType == FFMessageType.JOIN ||
+            item.messageType == FFMessageType.LEAVE) {
+            textViewerCount.text = item.participantCount.toString()
+        }
     }
 
     override fun onError(error: FlipFlopException) {

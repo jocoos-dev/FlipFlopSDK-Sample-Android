@@ -26,7 +26,13 @@ import com.jocoos.flipflop.sample.util.FFPlayerLifecycleWrapper
 import com.jocoos.flipflop.sample.util.getDimensionSize
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
+import kotlinx.android.synthetic.main.live_streaming_activity.*
 import kotlinx.android.synthetic.main.live_watching_activity.*
+import kotlinx.android.synthetic.main.live_watching_activity.chatMessage
+import kotlinx.android.synthetic.main.live_watching_activity.goodsList
+import kotlinx.android.synthetic.main.live_watching_activity.textTitle
+import kotlinx.android.synthetic.main.live_watching_activity.textViewer
+import kotlinx.android.synthetic.main.live_watching_activity.textViewerCount
 import java.util.*
 
 class LiveWatchingActivity : AppCompatActivity(), FFPlayerListener {
@@ -123,21 +129,13 @@ class LiveWatchingActivity : AppCompatActivity(), FFPlayerListener {
 
         sendButton.isEnabled = false
         sendButton.setOnClickListener {
-            val item = FFMessage(
-                "0",
-                FFMessageType.MESSAGE,
-                FlipFlopSampleApp.userManager.user.userId,
-                FlipFlopSampleApp.userManager.user.username,
-                FlipFlopSampleApp.userManager.user.profileUrl,
-                message, "", "", null, null, Date()
-            )
-            player?.sendMessage(item)
+            player?.sendMessage(message)
             editText.setText("")
         }
     }
 
     private fun initPlayer(video: Video) {
-        when (val result = FlipFlopSampleApp.flipFlopInstance?.createPlayer(this, video)) {
+        when (val result = FlipFlopSampleApp.flipFlopInstance?.getPlayer(this, video)) {
             is FFResult.Success -> {
                 player = result.value.apply {
                     listener = this@LiveWatchingActivity
@@ -183,10 +181,10 @@ class LiveWatchingActivity : AppCompatActivity(), FFPlayerListener {
     override fun onChatMessageReceived(player: FFPlayer, message: FFMessage) {
         Log.i(FlipFlopSampleApp.TAG, "player onChatMessageReceived")
         adapter?.addItem(message)
-    }
-
-    override fun onChatStatReceived(player: FFPlayer, stat: FFStat) {
-        textViewerCount.text = stat.participantCount.toString()
+        if (message.messageType == FFMessageType.JOIN ||
+            message.messageType == FFMessageType.LEAVE) {
+            textViewerCount.text = message.participantCount.toString()
+        }
     }
 
     override fun onError(player: FFPlayer, error: FlipFlopException) {
