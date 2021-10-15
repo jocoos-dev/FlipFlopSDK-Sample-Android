@@ -78,14 +78,25 @@
         app:layout_constraintTop_toBottomOf="@+id/goods_title" />
 
     <Button
-        android:id="@+id/next"
+        android:id="@+id/rtmp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:background="@color/colorPrimary"
-        android:text="Next"
+        android:text="RTMP"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/editContent"
+        app:layout_constraintTop_toBottomOf="@+id/goodsList"/>
+
+    <Button
+        android:id="@+id/webrtc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@color/colorPrimary"
+        android:text="WebRTC"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="@+id/editContent"
         app:layout_constraintTop_toBottomOf="@+id/goodsList"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

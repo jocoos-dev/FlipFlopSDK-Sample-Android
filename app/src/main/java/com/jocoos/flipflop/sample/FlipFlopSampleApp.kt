@@ -10,6 +10,7 @@ class FlipFlopSampleApp : Application() {
         const val KEY_VIDEO = "video"
         const val TITLE = "UNTITLED"
         const val CONTENT = "No Content"
+        const val STREAMING_RTMP = "rtmp"
 
         var flipFlopInstance: FlipFlop? = null
 

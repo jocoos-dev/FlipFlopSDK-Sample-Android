@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.jocoos.flipflop.*
 import com.jocoos.flipflop.sample.FlipFlopSampleApp
+import com.jocoos.flipflop.sample.FlipFlopSampleApp.Companion.STREAMING_RTMP
 import com.jocoos.flipflop.sample.R
 import com.jocoos.flipflop.sample.chatting.ChatAdapter
 import com.jocoos.flipflop.sample.goods.GoodsInfo
@@ -31,6 +32,7 @@ class LiveStreamingActivity : AppCompatActivity(), FFStreamerListener {
     private var isStarted = false
     private val scope: CoroutineScope = MainCoroutineScope(Job())
 
+    private var isRTMP = false
     private var title: String = ""
     private var content: String = ""
     private var goodsInfo: GoodsInfo? = null
@@ -43,6 +45,7 @@ class LiveStreamingActivity : AppCompatActivity(), FFStreamerListener {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         setContentView(R.layout.live_streaming_activity)
 
+        isRTMP = intent.getBooleanExtra(STREAMING_RTMP, true)
         title = intent.getStringExtra(FlipFlopSampleApp.TITLE) ?: FlipFlopSampleApp.TITLE
         content = intent.getStringExtra(FlipFlopSampleApp.CONTENT) ?: FlipFlopSampleApp.CONTENT
         goodsInfo = intent.getParcelableExtra(KEY_GOODS_INFO)
@@ -75,9 +78,16 @@ class LiveStreamingActivity : AppCompatActivity(), FFStreamerListener {
         textTitle.text = title
 
         // get instance for live streaming
-        streamer = FlipFlopSampleApp.flipFlopInstance?.getStreamer()?.apply {
-            listener = this@LiveStreamingActivity
-            prepare(this@LiveStreamingActivity, liveView, FFStreamerConfig())
+        if (isRTMP) {
+            streamer = FlipFlopSampleApp.flipFlopInstance?.getStreamer()?.apply {
+                listener = this@LiveStreamingActivity
+                prepare(this@LiveStreamingActivity, liveView, FFStreamerConfig())
+            }
+        } else {
+            streamer = FlipFlopSampleApp.flipFlopInstance?.createStreamer()?.apply {
+                listener = this@LiveStreamingActivity
+                prepare(this@LiveStreamingActivity, liveView, FFStreamerConfig())
+            }
         }
     }
 

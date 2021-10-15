@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jocoos.flipflop.sample.FlipFlopSampleApp.Companion.CONTENT
+import com.jocoos.flipflop.sample.FlipFlopSampleApp.Companion.STREAMING_RTMP
 import com.jocoos.flipflop.sample.FlipFlopSampleApp.Companion.TITLE
 import com.jocoos.flipflop.sample.R
 import com.jocoos.flipflop.sample.goods.GoodsInfo
@@ -71,9 +72,14 @@ class LiveStreamingFrontActivity : AppCompatActivity() {
         })
         editContent.setText(content)
 
-        next.setOnClickListener {
+        rtmp.setOnClickListener {
             if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(content)) {
-                showStreamer(title, content, GoodsInfo(selectedGoods))
+                showStreamer(title, content, GoodsInfo(selectedGoods), true)
+            }
+        }
+        webrtc.setOnClickListener {
+            if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(content)) {
+                showStreamer(title, content, GoodsInfo(selectedGoods), false)
             }
         }
 
@@ -124,8 +130,9 @@ class LiveStreamingFrontActivity : AppCompatActivity() {
         return
     }
 
-    private fun showStreamer(title: String, content: String, goodsInfo: GoodsInfo) {
+    private fun showStreamer(title: String, content: String, goodsInfo: GoodsInfo, isRTMP: Boolean) {
         val intent = Intent(this, LiveStreamingActivity::class.java).apply {
+            putExtra(STREAMING_RTMP, isRTMP)
             putExtra(TITLE, title)
             putExtra(CONTENT, content)
             putExtra(KEY_GOODS_INFO, goodsInfo)
