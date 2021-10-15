@@ -15,8 +15,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jocoos.flipflop.sample.FlipFlopSampleApp.Companion.CONTENT
 import com.jocoos.flipflop.sample.FlipFlopSampleApp.Companion.TITLE
 import com.jocoos.flipflop.sample.R
+import com.jocoos.flipflop.sample.goods.GoodsInfo
 import com.jocoos.flipflop.sample.goods.GoodsItem
 import com.jocoos.flipflop.sample.goods.GoodsRepository
+import com.jocoos.flipflop.sample.main.MainFragment.Companion.KEY_GOODS_INFO
 import kotlinx.android.synthetic.main.live_streaming_front_activity.*
 
 /**
@@ -71,7 +73,7 @@ class LiveStreamingFrontActivity : AppCompatActivity() {
 
         next.setOnClickListener {
             if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(content)) {
-                showStreamer(title, content)
+                showStreamer(title, content, GoodsInfo(selectedGoods))
             }
         }
 
@@ -122,10 +124,11 @@ class LiveStreamingFrontActivity : AppCompatActivity() {
         return
     }
 
-    private fun showStreamer(title: String, content: String) {
+    private fun showStreamer(title: String, content: String, goodsInfo: GoodsInfo) {
         val intent = Intent(this, LiveStreamingActivity::class.java).apply {
             putExtra(TITLE, title)
             putExtra(CONTENT, content)
+            putExtra(KEY_GOODS_INFO, goodsInfo)
         }
         startActivity(intent)
         finish()
