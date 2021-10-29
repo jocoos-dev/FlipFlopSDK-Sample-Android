@@ -5,6 +5,7 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,15 +21,20 @@ import com.jocoos.flipflop.sample.main.GoodsShape
 import com.jocoos.flipflop.sample.main.GoodsSize
 import com.jocoos.flipflop.sample.main.MainFragment.Companion.KEY_GOODS_INFO
 import com.jocoos.flipflop.sample.util.FFPlayerLifecycleWrapper
+import com.jocoos.flipflop.sample.util.MainCoroutineScope
 import com.jocoos.flipflop.sample.util.getDimensionSize
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.player_activity.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 /**
  * view vod
  */
 class PlayerActivity : AppCompatActivity(), FFPlayerListener {
+    private val scope: CoroutineScope = MainCoroutineScope(Job())
     private var adapter: ChatAdapter? = null
     private val adapterDataObserver = object : RecyclerView.AdapterDataObserver() {
         @Override
@@ -89,6 +95,9 @@ class PlayerActivity : AppCompatActivity(), FFPlayerListener {
         }
         textTitle.text = video.title
         textOwner.text = video.userName
+        textDelete.setOnClickListener {
+            showConfirmDialog()
+        }
 
         goodsInfo?.let {
             if (it.goodsList.isNotEmpty()) {
@@ -119,6 +128,20 @@ class PlayerActivity : AppCompatActivity(), FFPlayerListener {
         player?.let {
             playerLifecycleWrapper = FFPlayerLifecycleWrapper(lifecycle, it)
         }
+    }
+
+    private fun showConfirmDialog() {
+        val dialog = AlertDialog.Builder(this).apply {
+            setMessage("비디오를 삭제하시겠습니까?")
+            setPositiveButton(android.R.string.yes) { _, _ ->
+                scope.launch {
+                    FlipFlopSampleApp.flipFlopInstance?.deleteVideo(video.videoKey)
+                    finish()
+                }
+            }
+            setNegativeButton(android.R.string.no) { _, _ -> }
+        }
+        dialog.show()
     }
 
     // interface FFPlayerListener

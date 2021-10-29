@@ -32,7 +32,7 @@ buildscript {
 
 allprojects {
     repositories {
-        maven { url 'https://jocoos.jfrog.io/artifactory/default-maven-local/' }
+        maven { url 'https://jocoos2.jfrog.io/artifactory/default-maven-local/' }
         google()
         jcenter()
         maven { url 'https://jitpack.io' }

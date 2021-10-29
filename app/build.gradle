@@ -46,7 +46,7 @@ dependencies {
     // for FlipFlop SDK
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0"
     implementation 'com.amazonaws:aws-android-sdk-s3:2.6.31'
-    implementation('com.jocoos.flipflop:flipflop-core:0.11.9@aar') {
+    implementation('com.jocoos.flipflop:flipflop-core:0.11.10@aar') {
         transitive = true
     }
 
