@@ -8,7 +8,7 @@ FlipFlop SDK
 
 ## 사용방법
 
- - [위키 참조](https://github.com/jocoos-dev/FlipFlopSDK-Android/wiki)
+ - [FlipFlop](https://www.flipflop.tv/)의 Document 메뉴 참고
 
 ## 라이센스
 
