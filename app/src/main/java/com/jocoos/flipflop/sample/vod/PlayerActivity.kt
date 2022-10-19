@@ -111,7 +111,7 @@ class PlayerActivity : AppCompatActivity(), FFPlayerListener {
     }
 
     private fun initPlayer(video: Video) {
-        when (val result = FlipFlopSampleApp.flipFlopInstance?.createPlayer(this, video)) {
+        when (val result = FlipFlopSampleApp.flipFlopInstance?.getPlayer(this, video)) {
             is FFResult.Success -> {
                 player = result.value.apply {
                     listener = this@PlayerActivity

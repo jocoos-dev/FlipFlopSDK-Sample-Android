@@ -78,16 +78,9 @@ class LiveStreamingActivity : AppCompatActivity(), FFStreamerListener {
         textTitle.text = title
 
         // get instance for live streaming
-        if (isRTMP) {
-            streamer = FlipFlopSampleApp.flipFlopInstance?.getStreamer()?.apply {
-                listener = this@LiveStreamingActivity
-                prepare(this@LiveStreamingActivity, liveView, FFStreamerConfig())
-            }
-        } else {
-            streamer = FlipFlopSampleApp.flipFlopInstance?.createStreamer()?.apply {
-                listener = this@LiveStreamingActivity
-                prepare(this@LiveStreamingActivity, liveView, FFStreamerConfig())
-            }
+        streamer = FlipFlopSampleApp.flipFlopInstance?.getStreamer()?.apply {
+            listener = this@LiveStreamingActivity
+            prepare(this@LiveStreamingActivity, liveView, FFStreamerConfig())
         }
     }
 
@@ -129,7 +122,7 @@ class LiveStreamingActivity : AppCompatActivity(), FFStreamerListener {
 
         scope.launch {
             streamer?.getVideoKey()?.let { videoKey ->
-                when (val result = FlipFlopSampleApp.flipFlopInstance?.stopVideo(videoKey)) {
+                when (val result = FlipFlopSampleApp.flipFlopInstance?.endVideo(videoKey)) {
                     is FFResult.Success -> {
                         isStarted = false
                         finish()

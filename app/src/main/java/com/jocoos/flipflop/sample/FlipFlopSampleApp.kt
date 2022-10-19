@@ -23,6 +23,6 @@ class FlipFlopSampleApp : Application() {
         userManager = UserManager(applicationContext.getSharedPreferences("UserManager", Context.MODE_PRIVATE))
 
         // initialize FlipFlop SDK with app key and app secret
-        FlipFlop.initialize("AppKey", "AppSecret")
+        FlipFlop.initialize("4B9229E5B6", "F562BB4E-EBB3-40D8-9778-B517E9534719")
     }
 }

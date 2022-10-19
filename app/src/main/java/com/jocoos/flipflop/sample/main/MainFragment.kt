@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jocoos.flipflop.FFResult
-import com.jocoos.flipflop.FFVideoLoader
 import com.jocoos.flipflop.api.model.VideoGoods
 import com.jocoos.flipflop.api.model.VideoState
 import com.jocoos.flipflop.sample.FlipFlopSampleApp
@@ -17,6 +16,7 @@ import com.jocoos.flipflop.sample.R
 import com.jocoos.flipflop.sample.goods.GoodsInfo
 import com.jocoos.flipflop.sample.live.LiveWatchingActivity
 import com.jocoos.flipflop.sample.util.MainCoroutineScope
+import com.jocoos.flipflop.sample.util.toVideoGoodsList
 import com.jocoos.flipflop.sample.vod.PlayerActivity
 import kotlinx.android.synthetic.main.main_fragment.*
 import kotlinx.coroutines.Dispatchers
@@ -34,7 +34,6 @@ class MainFragment : Fragment() {
     private val scope = MainCoroutineScope()
 
     private var videoListAdapter: VideoListAdapter? = null
-    private var videoLoader: FFVideoLoader? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,7 +47,6 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         initView()
-        initVideoLoader()
 
         loadVideoList()
     }
@@ -76,25 +74,14 @@ class MainFragment : Fragment() {
         videoList.adapter = videoListAdapter
     }
 
-    private fun initVideoLoader() {
-        val config = FFVideoLoader.Config.Builder().count(20).build()
-        videoLoader = FlipFlopSampleApp.flipFlopInstance?.getVideoLoader(config)
-    }
-
     private fun loadVideoList() {
-        if (videoLoader == null) {
-            initVideoLoader()
-        } else {
-            videoLoader!!.reset()
-        }
-
         scope.launch {
             // fetch video list
-            when (val result = videoLoader!!.loadNextWithGoods(GoodsInfo::class.java)) {
+            when (val result = FlipFlopSampleApp.flipFlopInstance?.getVideos()) {
                 is FFResult.Success -> {
                     withContext(Dispatchers.Main) {
                         videoListAdapter?.run {
-                            setItems(result.value)
+                            setItems(toVideoGoodsList(result.value.content, GoodsInfo::class.java))
                             notifyDataSetChanged()
                         }
                         swipeRefresh.isRefreshing = false
@@ -102,8 +89,7 @@ class MainFragment : Fragment() {
                 }
                 is FFResult.Failure -> {
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(requireContext(), result.error.message, Toast.LENGTH_LONG)
-                            .show()
+                        Toast.makeText(requireContext(), result.error.message, Toast.LENGTH_LONG).show()
                     }
                 }
             }
